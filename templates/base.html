@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Packet Roulette Dashboard{% endblock %}</title>
+    <!-- Pico.css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <!-- Custom Turquoise Theme -->
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="container-fluid">
+        <ul>
+            <li><a href="/" class="logo"><strong>🔍 Packet Roulette</strong></a></li>
+        </ul>
+        <ul>
+            <li>
+                <div class="dropdown">
+                    <button class="profile-btn" aria-haspopup="true" aria-controls="profile-menu">
+                        <img src="{{ url_for('static', path='profile.png') }}" alt="Profile" class="profile-pic">
+                    </button>
+                    <div id="profile-menu" role="menu">
+                        <a href="/account"><i class="fas fa-user"></i> Account</a>
+                        <a href="/payments"><i class="fas fa-credit-card"></i> Billing</a>
+                        <a href="/usage"><i class="fas fa-chart-bar"></i> Usage</a>
+                        <hr>
+                        <a href="/help"><i class="fas fa-question-circle"></i> Help & Support</a>
+                        <a href="/tos"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                        <hr>
+                        <a href="/logout" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="container">
+        <small>
+            © 2024 Packet Roulette • 
+            <a href="/tos">Terms</a> • 
+            <a href="/privacy">Privacy</a> • 
+            <a href="/help">Help Center</a>
+        </small>
+    </footer>
+
+    <!-- Dropdown Script -->
+    <script>
+        document.querySelector('.profile-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const menu = document.getElementById('profile-menu');
+            menu.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                document.getElementById('profile-menu').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
